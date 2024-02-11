@@ -4,7 +4,7 @@ const categoryEnum = ['Bundels', 'Finished products', 'Raw materials'];
 
 
 const itemSchema = new mongoose.Schema({
-    SKU:{
+    SKU: {
         type: String,
         required: true
     },
@@ -14,19 +14,19 @@ const itemSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: statusEnum,
+        enum: categoryEnum,
     },
     tags: {
         type: String,
         enum: statusEnum,
     },
-    inStock:{
-        type:Number,
-        require:true
+    inStock: {
+        type: Number,
+        require: true
     },
-    availableStock:{
-        type:Number,
-        require:true
+    availableStock: {
+        type: Number,
+        require: true
     }
 });
 
