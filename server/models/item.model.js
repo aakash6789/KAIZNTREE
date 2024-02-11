@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 
-const categoryEnum = ['Bundels', 'Finished products', 'Raw materials'];
+const categorySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    }
+});
 
+const tagValues = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6'];
 
 const itemSchema = new mongoose.Schema({
     SKU: {
@@ -13,12 +20,14 @@ const itemSchema = new mongoose.Schema({
         require: true
     },
     category: {
-        type: String,
-        enum: categoryEnum,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
     },
     tags: {
-        type: String,
-        enum: statusEnum,
+        type: [{
+            type: String,
+            enum: tagValues // Specify the enum values here
+        }],
     },
     inStock: {
         type: Number,
@@ -30,6 +39,7 @@ const itemSchema = new mongoose.Schema({
     }
 });
 
+const Category = mongoose.model('Category', categorySchema);
 const Item = mongoose.model('Item', itemSchema);
 
-export default Item;
+export { Item,Category};
