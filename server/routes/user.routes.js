@@ -9,10 +9,6 @@ router.post('/logout',verifyJWT,logOutUser);
 router.post('/refresh-token',refreshAccessToken);
 router.post('/change-pass',verifyJWT,updatePassword);
 router.get('/curr-user',verifyJWT,getCurrUser);
-// router.patch('/updateAcc',updateAccountDetails);
-// // router.patch('/updateAva',verifyJWT,upload.single("avatar"),updateUserAvatar);
-// // router.patch('/updateCov',upload.single("coverImage"),updateUserCoverImage);
-// router.get("/c/:username",verifyJWT,getUserChannelProfile);
-// router.get("/history",verifyJWT,getWatchHistory);
+
 
 export default router;

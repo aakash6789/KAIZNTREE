@@ -101,12 +101,15 @@ const getSearchedItem=asyncHandler(async(req,res)=>{
                 { SKU: { $regex: new RegExp(query, 'i') } },
             ]
         });
+        if(!results){
+            throw new ApiError(404,"Nothing here");
+        }
         return res.status(201).json(
             new ApiResponse(200,results,"Items searched successfully")
            )
     } catch (error) {
         console.log(error);
-        throw new ApiError(500,"Unable to find the item")
+        throw new ApiError(500,"Unable to fetch the item")
     }
 })
 export {getAllItems,createCategory,createItem,getSearchedItem};
