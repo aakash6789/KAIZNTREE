@@ -28,7 +28,7 @@ eg:
     "message": "User added sucessfully",
     "success": true
 }
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 2) Logging in
 
 POST- http://localhost:3000/api/v1/users/login
@@ -66,6 +66,9 @@ eg:
 3) Getting items
 
 GET- http://localhost:3000/api/v1/items
+
+Authentication: JWT access token
+
 
 Paremters:
 a) NA
@@ -418,14 +421,52 @@ c) When tags are passed as an parameter
     "message": "All items fetched successfully",
     "success": true
 }
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-e)When tags and 
+4)Searching an item
 
-4) Creating an item
+Authentication: jwt access token
+
+Parameters: Query parameter
+eg : http://localhost:3000/api/v1/items/search-item?q=searchQuery
+
+Request:
+Eg
+http://localhost:3000/api/v1/items/search-item?q=ocncot
+
+
+
+Response:
+eg: 
+{
+    "statusCode": 200,
+    "data": [
+        {
+            "_id": "65c880763800ee736b21c33e",
+            "SKU": "OCNCOT",
+            "name": "Cotton -Ocean Print",
+            "category": "65c87d95cd5bd0645c9657b5",
+            "tags": [
+                "tag1",
+                "tag2",
+                "tag4"
+            ],
+            "inStock": 88,
+            "availableStock": 88,
+            "__v": 0
+        }
+    ],
+    "message": "Items searched successfully",
+    "success": true
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5) Creating an item
 
 POST- http://localhost:3000/api/v1/items/create-item
 
 paramters: All the details required to create an item
+
+Authentication: JWT access token
 
 eg:
 {
@@ -467,11 +508,13 @@ eg:
 on failure
 eg:
 Error: Item already exists!!
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-5) Creating an category
+6) Creating an category
 
 POST- http://localhost:3000/api/v1/items/create-category
+
+Authentication: JWT access token
 
 
 Parameters: 
@@ -498,4 +541,4 @@ on failure
 eg:
 Error: category already exists!!
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

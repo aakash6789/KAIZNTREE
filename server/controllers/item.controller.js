@@ -9,27 +9,24 @@ import { Item,Category } from "../models/item.model.js";
 const getAllItems=asyncHandler(async(req,res)=>{
     try{
         let query = {}; 
-        // if (req.query.category) {
-        //     query.category = req.query.category;
-        // }
+        if (req.query.category) {
+            query.category = req.query.category;
+        }
 
-        // if (req.query.tags) {
-        //     query.tags = { $in: req.query.tags.split(',') };
-        // }
+        if (req.query.tags) {
+            query.tags = { $all: req.query.tags.split(',') };
+        }
 
-        // if (req.query.stock_status) {
-        //     query.stock_status = req.query.stock_status;
-        // }
+        if (req.query.stock_status) {
+            query.stock_status = req.query.stock_status;
+        }
         if (req.body.category) {
-            const category= await Category.findOne({name:req.body.category})
-            // if(!category){
-            //     throw new ApiError(404,"Category does not exist");
-            // }
+            const category= await Category.findOne({name:req.body.category});
             query.category = category?._id;
         }
 
         if (req.body.tags) {
-            query.tags = { $in: req.body.tags };
+            query.tags = { $all: req.body.tags };
         }
 
         if (req.body.stock_status) {
@@ -95,4 +92,21 @@ const createCategory=asyncHandler(async(req,res)=>{
        )
 })
 
-export {getAllItems,createCategory,createItem};
+const getSearchedItem=asyncHandler(async(req,res)=>{
+    try {
+        const query = req.query.q;
+        const results = await Item.find({
+            $or: [
+                { name: { $regex: new RegExp(query, 'i') } },
+                { SKU: { $regex: new RegExp(query, 'i') } },
+            ]
+        });
+        return res.status(201).json(
+            new ApiResponse(200,results,"Items searched successfully")
+           )
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(500,"Unable to find the item")
+    }
+})
+export {getAllItems,createCategory,createItem,getSearchedItem};
